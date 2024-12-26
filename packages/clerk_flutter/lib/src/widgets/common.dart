@@ -2,7 +2,7 @@
 
 import 'package:clerk_flutter/src/widgets/ui/style/colors.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:flutter_inset_shadow/flutter_inset_shadow.dart';
 import 'package:phone_input/phone_input_package.dart';
 
 extension NullExtension on String {
@@ -51,8 +51,7 @@ const insetBoxShadowDecoration = BoxDecoration(boxShadow: insetBoxShadow);
 const firstColumnWidth = 215.0;
 const secondColumnWidth = 280.0;
 
-const divider =
-    Divider(color: ClerkColors.dawnPink, thickness: 2.0, height: 2.0);
+const divider = Divider(color: ClerkColors.dawnPink, thickness: 2.0, height: 2.0);
 
 // Margins
 
@@ -81,16 +80,11 @@ const verticalMargin96 = SizedBox(height: 96.0);
 
 const sliverVerticalMargin4 = SliverToBoxAdapter(child: SizedBox(height: 4.0));
 const sliverVerticalMargin8 = SliverToBoxAdapter(child: SizedBox(height: 8.0));
-const sliverVerticalMargin12 =
-    SliverToBoxAdapter(child: SizedBox(height: 12.0));
-const sliverVerticalMargin16 =
-    SliverToBoxAdapter(child: SizedBox(height: 16.0));
-const sliverVerticalMargin24 =
-    SliverToBoxAdapter(child: SizedBox(height: 24.0));
-const sliverVerticalMargin32 =
-    SliverToBoxAdapter(child: SizedBox(height: 32.0));
-const sliverVerticalMargin48 =
-    SliverToBoxAdapter(child: SizedBox(height: 48.0));
+const sliverVerticalMargin12 = SliverToBoxAdapter(child: SizedBox(height: 12.0));
+const sliverVerticalMargin16 = SliverToBoxAdapter(child: SizedBox(height: 16.0));
+const sliverVerticalMargin24 = SliverToBoxAdapter(child: SizedBox(height: 24.0));
+const sliverVerticalMargin32 = SliverToBoxAdapter(child: SizedBox(height: 32.0));
+const sliverVerticalMargin48 = SliverToBoxAdapter(child: SizedBox(height: 48.0));
 
 // Paddings
 
