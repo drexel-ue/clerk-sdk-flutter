@@ -84,7 +84,10 @@ class ClerkAuthProvider extends clerk.Auth with ChangeNotifier {
         useSafeArea: false,
         useRootNavigator: true,
         routeSettings: const RouteSettings(name: _kSsoRouteName),
-        builder: (context) => _SsoWebViewOverlay(url: url),
+        builder: (_) => _SsoWebViewOverlay(
+          url: url,
+          theme: Theme.of(context),
+        ),
       );
       if (redirectUrl != null && context.mounted) {
         final uri = Uri.parse(redirectUrl);
@@ -149,8 +152,7 @@ class ClerkAuthProvider extends clerk.Auth with ChangeNotifier {
   /// but may still not be acceptable to the back end
   String? checkPassword(String? password, String? confirmation) {
     if (password != confirmation) {
-      return translator
-          .translate('Password and password confirmation must match');
+      return translator.translate('Password and password confirmation must match');
     }
 
     if (password case String password when password.isNotEmpty) {
@@ -174,8 +176,8 @@ class ClerkAuthProvider extends clerk.Auth with ChangeNotifier {
       }
 
       if (missing.isNotEmpty) {
-        final value = translator.alternatives(missing,
-            connector: 'and', prefix: 'Password requires');
+        final value =
+            translator.alternatives(missing, connector: 'and', prefix: 'Password requires');
         return value.replaceFirst('###', criteria.allowedSpecialCharacters);
       }
     }
@@ -184,16 +186,17 @@ class ClerkAuthProvider extends clerk.Auth with ChangeNotifier {
   }
 
   /// Add an [clerk.AuthError] for [message] to the [errorStream]
-  void addError(String message) =>
-      _errors.add(clerk.AuthError(message: message));
+  void addError(String message) => _errors.add(clerk.AuthError(message: message));
 }
 
 class _SsoWebViewOverlay extends StatefulWidget {
   const _SsoWebViewOverlay({
     required this.url,
+    required this.theme,
   });
 
   final String url;
+  final ThemeData theme;
 
   @override
   State<_SsoWebViewOverlay> createState() => _SsoWebViewOverlayState();
@@ -237,18 +240,24 @@ class _SsoWebViewOverlayState extends State<_SsoWebViewOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: FutureBuilder(
-          future: _title,
-          builder: (context, snapshot) {
-            return Text(snapshot.data ?? '');
-          },
+    return Theme(
+      data: widget.theme,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: FutureBuilder(
+            future: _title,
+            builder: (context, snapshot) {
+              return Text(
+                snapshot.data ?? '',
+                style: const TextStyle(color: Colors.white),
+              );
+            },
+          ),
+          actions: const [CloseButton(color: Colors.white)],
         ),
-        actions: const [CloseButton()],
+        body: WebViewWidget(controller: controller),
       ),
-      body: WebViewWidget(controller: controller),
     );
   }
 }
